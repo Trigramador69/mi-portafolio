@@ -15,17 +15,16 @@ const routes = [
   { to: "/achievements", label: "Achievements" },
   { to: "/projects", label: "Projects" },
   { to: "/contact", label: "Contact" },
-  { to: "/resume", label: "Resume" },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
 
-  // Cierra al navegar
+  // cierra al navegar
   useEffect(() => { setOpen(false); }, [location.pathname]);
 
-  // Bloquea scroll del body
+  // bloquea scroll del body
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -41,7 +40,9 @@ export default function Navbar() {
         {/* Desktop */}
         <ul className="hidden gap-4 sm:flex">
           {routes.map(r => (
-            <li key={r.to}><NavLink to={r.to} className={linkCls}>{r.label}</NavLink></li>
+            <li key={r.to}>
+              <NavLink to={r.to} className={linkCls}>{r.label}</NavLink>
+            </li>
           ))}
         </ul>
         <div className="hidden sm:block"><SocialLinks /></div>
@@ -50,30 +51,29 @@ export default function Navbar() {
         <button
           className="sm:hidden rounded-xl p-2 border border-neutral-800 hover:bg-white/5"
           aria-label="Open menu"
-          aria-controls="mobile-menu"
-          aria-expanded={open}
           onClick={() => setOpen(true)}
         >
           <Menu size={20} />
         </button>
       </nav>
 
-      {/* === MOBILE FULL-SCREEN MENU === */}
+      {/* Mobile full-screen menu with gradient */}
       <AnimatePresence>
         {open && (
           <motion.div
-             key="mobile-full"
-             initial={{ opacity: 0 }}
-             animate={{ opacity: 1 }}
-             exit={{ opacity: 0 }}
-             className="fixed inset-0 z-[100] mobile-menu-bg"
-             style={{
-                paddingTop: "env(safe-area-inset-top)",
-                paddingBottom: "env(safe-area-inset-bottom)",
+            key="mobile-full"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex flex-col
+                       bg-[linear-gradient(180deg,rgba(168,85,247,0.16)_0%,rgba(10,10,10,1)_28%)]"
+            style={{
+              paddingTop: "env(safe-area-inset-top)",
+              paddingBottom: "env(safe-area-inset-bottom)",
             }}
->
-            {/* Header del menú */}
-            <div className="flex items-center justify-between border-b border-neutral-800 px-4 py-3">
+          >
+            {/* header interno */}
+            <div className="flex items-center justify-between px-4 py-3 border-b border-neutral-800">
               <Link to="/" className="text-lg font-semibold">
                 <span className="text-purple-500">Diego</span> Trigo
               </Link>
@@ -86,12 +86,12 @@ export default function Navbar() {
               </button>
             </div>
 
-            {/* Contenido del menú */}
+            {/* contenido */}
             <motion.nav
-              initial={{ y: 20, opacity: 0 }}
+              initial={{ y: 16, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.25 }}
-              className="h-[calc(100dvh-64px)] overflow-y-auto px-3 py-4"
+              transition={{ duration: 0.22 }}
+              className="flex-1 overflow-y-auto px-3 py-4"
             >
               <ul className="flex flex-col">
                 {routes.map((r, i) => (
@@ -105,7 +105,9 @@ export default function Navbar() {
                       to={r.to}
                       className={({ isActive }) =>
                         `block rounded-xl px-4 py-3 text-lg ${
-                          isActive ? "text-purple-400 bg-white/5" : "text-neutral-200 hover:bg-white/5"
+                          isActive
+                            ? "text-purple-400 bg-white/5"
+                            : "text-neutral-200 hover:bg-white/5"
                         }`
                       }
                     >
