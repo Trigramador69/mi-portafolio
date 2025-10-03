@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import SocialLinks from "./SocialLinks";
@@ -20,26 +20,25 @@ const routes = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const location = useLocation();
 
-  // Bloquear scroll del body cuando el menú está abierto
+  // Cierra al navegar (por si un link no tiene onClick)
+  useEffect(() => { setOpen(false); }, [location.pathname]);
+
+  // Bloquea scroll del body cuando el menú está abierto
   useEffect(() => {
-    if (open) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "";
+    document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
-  // Cierra el menú al navegar
-  const close = () => setOpen(false);
-
   return (
-    <header className="sticky top-0 z-50 border-b border-neutral-800 bg-neutral-950/80 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-neutral-800 bg-neutral-950/80 backdrop-blur">
       <nav className="container-clip flex items-center justify-between py-3">
-        {/* Brand */}
-        <Link to="/" className="text-lg font-semibold" onClick={close}>
+        <Link to="/" className="text-lg font-semibold">
           <span className="text-purple-500">Diego</span> Trigo
         </Link>
 
-        {/* Links desktop */}
+        {/* Desktop */}
         <ul className="hidden gap-4 sm:flex">
           {routes.map((r) => (
             <li key={r.to}>
@@ -47,13 +46,9 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
+        <div className="hidden sm:block"><SocialLinks /></div>
 
-        {/* Social desktop */}
-        <div className="hidden sm:block">
-          <SocialLinks />
-        </div>
-
-        {/* Botón hamburguesa (mobile) */}
+        {/* Mobile trigger */}
         <button
           className="sm:hidden rounded-xl p-2 border border-neutral-800 hover:bg-white/5"
           aria-label="Open menu"
@@ -65,36 +60,43 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Sheet Mobile */}
+      {/* Overlay + Aside como hermanos, con z-index separados */}
       <AnimatePresence>
         {open && (
-          <motion.div
-                key="overlay"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="fixed inset-0 z-[60] bg-black/70" 
-                onClick={close}
-            >
+          <>
+            {/* Overlay */}
+            <motion.div
+              key="overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 bg-black/70"
+              onClick={() => setOpen(false)}
+            />
+
+            {/* Panel lateral */}
             <motion.aside
-                id="mobile-menu"
-                role="dialog"
-                aria-modal="true"
-                initial={{ x: "100%" }}
-                animate={{ x: 0 }}
-                exit={{ x: "100%" }}
-                transition={{ type: "tween", duration: 0.25 }}
-                className="absolute right-0 top-0 h-full w-[82%] max-w-[340px] bg-neutral-950 border-l border-neutral-800 shadow-2xl overflow-y-auto"
-                onClick={(e) => e.stopPropagation()}
+              key="sheet"
+              id="mobile-menu"
+              role="dialog"
+              aria-modal="true"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.25 }}
+              className="fixed right-0 top-0 z-60 h-full w-[82%] max-w-[340px]
+                         bg-neutral-950 border-l border-neutral-800 shadow-2xl
+                         overflow-y-auto
+                         pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]"
             >
               <div className="flex items-center justify-between px-4 py-3 border-b border-neutral-800">
-                <Link to="/" className="text-lg font-semibold" onClick={close}>
+                <Link to="/" className="text-lg font-semibold">
                   <span className="text-purple-500">Diego</span> Trigo
                 </Link>
                 <button
                   className="rounded-xl p-2 border border-neutral-800 hover:bg-white/5"
                   aria-label="Close menu"
-                  onClick={close}
+                  onClick={() => setOpen(false)}
                 >
                   <X size={18} />
                 </button>
@@ -111,7 +113,6 @@ export default function Navbar() {
                     >
                       <NavLink
                         to={r.to}
-                        onClick={close}
                         className={({ isActive }) =>
                           `block rounded-xl px-3 py-3 text-base ${
                             isActive
@@ -126,13 +127,12 @@ export default function Navbar() {
                   ))}
                 </ul>
 
-                {/* Social en mobile */}
                 <div className="mt-3 px-1">
                   <SocialLinks />
                 </div>
               </nav>
             </motion.aside>
-          </motion.div>
+          </>
         )}
       </AnimatePresence>
     </header>
