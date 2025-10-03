@@ -1,22 +1,19 @@
+import MotionCard from "./MotionCard";
 import type { Project } from "../data/projects";
 
 export default function ProjectCard({ title, summary, tech, demoUrl, repoUrl, thumbnail }: Project) {
   return (
-    <article
-      className="card overflow-hidden transition hover:shadow-lg glow"
-      onMouseMove={(e) => {
-        const el = e.currentTarget as HTMLDivElement;
-        const rect = el.getBoundingClientRect();
-        el.style.setProperty("--mx", `${((e.clientX - rect.left) / rect.width) * 100}%`);
-      }}
-    >
+    <MotionCard hover="glow">
       {thumbnail && (
         <img
           src={thumbnail}
           alt={title}
           className="w-full max-h-40 object-contain bg-neutral-900"
           loading="lazy"
-          onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "/images/placeholder.jpg"; }}
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = "/images/placeholder.jpg";
+          }}
         />
       )}
       <div className="p-4">
@@ -30,6 +27,6 @@ export default function ProjectCard({ title, summary, tech, demoUrl, repoUrl, th
           {repoUrl && <a className="link-ux text-sm" href={repoUrl} target="_blank">Repo</a>}
         </div>
       </div>
-    </article>
+    </MotionCard>
   );
 }
