@@ -1,5 +1,5 @@
 import { motion, type Variants } from "framer-motion";
-import { fadeUp, onceViewport, hoverGlow, hoverLift } from "../lib/motion";
+import { fadeUp, onceViewport, hoverGlow } from "../lib/motion";
 
 type Props = {
   children: React.ReactNode;
