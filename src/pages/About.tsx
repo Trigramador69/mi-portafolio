@@ -1,5 +1,3 @@
-import { motion } from "framer-motion";
-import { fadeLeft, fadeRight, onceViewport } from "../lib/motion";
 
 export default function About() {
   return (
