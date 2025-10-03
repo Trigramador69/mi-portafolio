@@ -69,23 +69,23 @@ export default function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div
-            key="overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm"
-            onClick={close}
-          >
+                key="overlay"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-[60] bg-black/70" 
+                onClick={close}
+            >
             <motion.aside
-              id="mobile-menu"
-              role="dialog"
-              aria-modal="true"
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "tween", duration: 0.25 }}
-              className="absolute right-0 top-0 h-full w-[82%] max-w-[340px] bg-neutral-950 border-l border-neutral-800 shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
+                id="mobile-menu"
+                role="dialog"
+                aria-modal="true"
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100%" }}
+                transition={{ type: "tween", duration: 0.25 }}
+                className="absolute right-0 top-0 h-full w-[82%] max-w-[340px] bg-neutral-950 border-l border-neutral-800 shadow-2xl overflow-y-auto"
+                onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between px-4 py-3 border-b border-neutral-800">
                 <Link to="/" className="text-lg font-semibold" onClick={close}>
