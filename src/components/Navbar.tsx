@@ -60,70 +60,75 @@ export default function Navbar() {
       {/* Mobile full-screen menu with gradient */}
       <AnimatePresence>
         {open && (
-          <motion.div
+            <motion.div
             key="mobile-full"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex flex-col
-                       bg-[linear-gradient(180deg,rgba(168,85,247,0.16)_0%,rgba(10,10,10,1)_28%)]"
+            // pantalla completa REAL en iOS, fondo 100% opaco
+            className="fixed top-0 left-0 w-screen h-[100dvh] z-[9999] bg-neutral-950 flex flex-col"
             style={{
-              paddingTop: "env(safe-area-inset-top)",
-              paddingBottom: "env(safe-area-inset-bottom)",
+                paddingTop: "env(safe-area-inset-top)",
+                paddingBottom: "env(safe-area-inset-bottom)",
             }}
-          >
-            {/* header interno */}
+            >
+            {/* header del menú */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-neutral-800">
-              <Link to="/" className="text-lg font-semibold">
+                <Link to="/" className="text-lg font-semibold" onClick={() => setOpen(false)}>
                 <span className="text-purple-500">Diego</span> Trigo
-              </Link>
-              <button
+                </Link>
+                <button
                 className="rounded-xl p-2 border border-neutral-800 hover:bg-white/5"
                 aria-label="Close menu"
                 onClick={() => setOpen(false)}
-              >
+                >
                 <X size={18} />
-              </button>
+                </button>
             </div>
 
-            {/* contenido */}
+            {/* contenido del menú */}
             <motion.nav
-              initial={{ y: 16, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.22 }}
-              className="flex-1 overflow-y-auto px-3 py-4"
+                initial={{ y: 16, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.22 }}
+                className="flex-1 overflow-y-auto px-3 py-4"
             >
-              <ul className="flex flex-col">
-                {routes.map((r, i) => (
-                  <motion.li
+                <ul className="flex flex-col">
+                {[
+                    { to: "/", label: "Home" },
+                    { to: "/about", label: "About" },
+                    { to: "/achievements", label: "Achievements" },
+                    { to: "/projects", label: "Projects" },
+                    { to: "/contact", label: "Contact" },
+                ].map((r, i) => (
+                    <motion.li
                     key={r.to}
                     initial={{ opacity: 0, x: 12 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.03 * i }}
-                  >
-                    <NavLink
-                      to={r.to}
-                      className={({ isActive }) =>
-                        `block rounded-xl px-4 py-3 text-lg ${
-                          isActive
-                            ? "text-purple-400 bg-white/5"
-                            : "text-neutral-200 hover:bg-white/5"
-                        }`
-                      }
                     >
-                      {r.label}
+                    <NavLink
+                        to={r.to}
+                        onClick={() => setOpen(false)}
+                        className={({ isActive }) =>
+                        `block rounded-xl px-4 py-3 text-lg ${
+                            isActive ? "text-purple-400 bg-white/5" : "text-neutral-200 hover:bg-white/5"
+                        }`
+                        }
+                    >
+                        {r.label}
                     </NavLink>
-                  </motion.li>
+                    </motion.li>
                 ))}
-              </ul>
+                </ul>
 
-              <div className="mt-4 px-1">
+                <div className="mt-4 px-1">
                 <SocialLinks />
-              </div>
+                </div>
             </motion.nav>
-          </motion.div>
+            </motion.div>
         )}
-      </AnimatePresence>
+        </AnimatePresence>
     </header>
   );
 }
