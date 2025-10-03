@@ -6,7 +6,7 @@ export type Project = {
   demoUrl?: string;
   repoUrl?: string;
   featured?: boolean;
-  thumbnail?: string; // usar rutas desde /public, por ej: "/images/projects/hiretree.jpg"
+  thumbnail?: string; 
 };
 
 export const projects: Project[] = [
@@ -18,6 +18,6 @@ export const projects: Project[] = [
     demoUrl: "https://hire-treee.netlify.app/",
     repoUrl: "https://github.com/Trigramador69/HireTree-Buildathon2025",
     featured: true,
-    thumbnail: "/images/projects/hiretree.png", // ← pon el archivo en public/images/projects/hiretree.jpg
+    thumbnail: "/images/projects/hiretree.png", 
   },
 ];

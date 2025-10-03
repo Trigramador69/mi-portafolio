@@ -4,7 +4,7 @@ import { fadeUp, onceViewport, hoverGlow } from "../lib/motion";
 type Props = {
   children: React.ReactNode;
   className?: string;
-  variants?: Variants;      // entrada (por defecto fadeUp)
+  variants?: Variants;      // entrada (fadeUp)
   hover?: "lift" | "glow" | false; // efecto hover
   as?: "article" | "div" | "section";
 };

@@ -4,35 +4,30 @@ import { fadeLeft, fadeRight, onceViewport } from "../lib/motion";
 export default function About() {
   return (
     <section className="container-clip grid gap-8 sm:grid-cols-[220px,1fr] items-start">
-      <motion.img
+      <img
         src="/images/me/DiegoTrigo.jpg"
         alt="Diego Trigo"
         className="h-[220px] w-[220px] object-cover rounded-2xl border border-neutral-800"
-        variants={fadeLeft}
-        initial="hidden"
-        whileInView="show"
-        viewport={onceViewport}
-        whileHover={{ scale: 1.05, rotate: 1 }}
       />
-
-      <motion.div
-        variants={fadeRight}
-        initial="hidden"
-        whileInView="show"
-        viewport={onceViewport}
-        className="space-y-4"
-      >
+      <div className="space-y-4">
         <h1 className="text-3xl font-semibold">About me</h1>
         <p className="text-neutral-300">
-          I’m Diego, 21 y/o, Systems Engineer based in Cochabamba, Bolivia.
-          I enjoy building full-stack apps, mobile features and experimenting with Web3/AI.
+          I’m Diego, 21 y/o Systems Engineer from Cochabamba, Bolivia.  
+          My journey started with C++, JavaScript and Python, and today I focus on full-stack development with React and Spring Boot.  
+          I’m passionate about blockchain (Web3, smart contracts) and AI-driven automation with tools like n8n, always aiming for clean architectures and reliable products.  
+
+          Outside of coding, I enjoy staying active — I train Brazilian Jiu Jitsu, go to the gym, play football, and also love expressing creativity through songwriting.
         </p>
+
+        <h2 className="text-xl font-semibold text-purple-400">How I work</h2>
         <ul className="list-disc pl-5 space-y-1 text-neutral-300">
-          <li>Teaching assistant / community work</li>
-          <li>Hackathons & team collaboration</li>
-          <li>Focus on quality: SOLID, testing, clean architecture</li>
+            <li>Focus on clean architectures and scalable design.</li>
+            <li>Team player: hackathons, collaboration and knowledge sharing.</li>
+            <li>Continuous learner, always exploring new technologies like Web3 and AI flows.</li>
         </ul>
-      </motion.div>
+
+      </div>
     </section>
   );
 }
+

@@ -37,9 +37,10 @@ export default function Home() {
            </h2>
 
           <p className="mt-4 text-neutral-300">
-            Systems Engineer — Full-Stack. I work with React, Spring Boot,
-            Android/Kotlin and Web3/AI. I build reliable products with clean
-            architectures and quality practices.
+            Systems Engineer who started with C++, JavaScript and Python, and grew into full-stack web 
+            development with React, Spring Boot and many other technologies.  
+            I’m especially interested in blockchain (Web3, smart contracts) and AI-driven automation with tools like n8n, 
+            always focused on clean architectures and reliable products.
           </p>
 
           <div className="mt-5 flex justify-center gap-3">
