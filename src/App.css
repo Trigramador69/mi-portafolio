@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+/* === DARK THEME BASE === */
+@layer base {
+  html, body, #root { height: 100%; }
+  body { margin: 0; background: #0a0a0a; color: #f5f5f5; }
+  p, li, small { color: #d4d4d8; }      /* neutral-300 */
+  h1, h2, h3, h4, h5, h6 { color: #fafafa; } /* neutral-50 */
+}
+
+/* === UTILIDADES PERSONALIZADAS (solo utilidades nativas en @apply) === */
+@layer utilities {
+  .container-clip { @apply mx-auto max-w-6xl px-4; }
+  .card          { @apply rounded-3xl border border-neutral-800 bg-neutral-900; }
+  .chip          { @apply rounded-full border border-neutral-700 px-3 py-1 text-xs text-neutral-300; }
+  .link-ux       { @apply underline underline-offset-4 hover:text-purple-300; }
+
+  /* Botones: sin reusar .btn dentro de @apply */
+  .btn-outline   { @apply inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-medium border border-neutral-700 hover:bg-white/5; }
+  .btn-primary   { @apply inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-medium bg-purple-600 text-white hover:bg-purple-700; }
+}
+
+@layer utilities {
+  .glow {
+    position: relative;
+    isolation: isolate;
+  }
+  .glow::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: 1.5rem;
+    background: radial-gradient(120px 60px at var(--mx,50%) 0%, rgba(168,85,247,.35), transparent 60%);
+    opacity: 0;
+    transition: opacity .25s ease, background-position .25s ease;
+  }
+  .glow:hover::after { opacity: 1; }
+}
