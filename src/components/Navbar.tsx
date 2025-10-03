@@ -22,7 +22,10 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
 
+  // Cierra al navegar
   useEffect(() => { setOpen(false); }, [location.pathname]);
+
+  // Bloquea scroll del body
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -35,15 +38,15 @@ export default function Navbar() {
           <span className="text-purple-500">Diego</span> Trigo
         </Link>
 
+        {/* Desktop */}
         <ul className="hidden gap-4 sm:flex">
-          {routes.map((r) => (
-            <li key={r.to}>
-              <NavLink to={r.to} className={linkCls}>{r.label}</NavLink>
-            </li>
+          {routes.map(r => (
+            <li key={r.to}><NavLink to={r.to} className={linkCls}>{r.label}</NavLink></li>
           ))}
         </ul>
         <div className="hidden sm:block"><SocialLinks /></div>
 
+        {/* Trigger mobile */}
         <button
           className="sm:hidden rounded-xl p-2 border border-neutral-800 hover:bg-white/5"
           aria-label="Open menu"
@@ -55,78 +58,70 @@ export default function Navbar() {
         </button>
       </nav>
 
+      {/* === MOBILE FULL-SCREEN MENU === */}
       <AnimatePresence>
         {open && (
-          <>
-            {/* Overlay: encima de todo */}
-            <motion.div
-              key="overlay"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[60] bg-black/80"
-              onClick={() => setOpen(false)}
-            />
+          <motion.div
+            key="mobile-full"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            // Pantalla completa, SOLIDA, por encima de todo
+            className="fixed inset-0 z-[100] bg-neutral-950"
+            style={{
+              // safe areas iOS
+              paddingTop: "env(safe-area-inset-top)",
+              paddingBottom: "env(safe-area-inset-bottom)",
+            }}
+          >
+            {/* Header del menú */}
+            <div className="flex items-center justify-between border-b border-neutral-800 px-4 py-3">
+              <Link to="/" className="text-lg font-semibold">
+                <span className="text-purple-500">Diego</span> Trigo
+              </Link>
+              <button
+                className="rounded-xl p-2 border border-neutral-800 hover:bg-white/5"
+                aria-label="Close menu"
+                onClick={() => setOpen(false)}
+              >
+                <X size={18} />
+              </button>
+            </div>
 
-            {/* Panel lateral: aún más arriba */}
-            <motion.aside
-              key="sheet"
-              id="mobile-menu"
-              role="dialog"
-              aria-modal="true"
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "tween", duration: 0.25 }}
-              className="fixed inset-y-0 right-0 z-[70] w-[82%] max-w-[340px]
-                         bg-neutral-950 border-l border-neutral-800 shadow-2xl
-                         overflow-y-auto
-                         pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]"
+            {/* Contenido del menú */}
+            <motion.nav
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.25 }}
+              className="h-[calc(100dvh-64px)] overflow-y-auto px-3 py-4"
             >
-              <div className="flex items-center justify-between px-4 py-3 border-b border-neutral-800">
-                <Link to="/" className="text-lg font-semibold">
-                  <span className="text-purple-500">Diego</span> Trigo
-                </Link>
-                <button
-                  className="rounded-xl p-2 border border-neutral-800 hover:bg-white/5"
-                  aria-label="Close menu"
-                  onClick={() => setOpen(false)}
-                >
-                  <X size={18} />
-                </button>
-              </div>
-
-              <nav className="px-2 py-3">
-                <ul className="flex flex-col">
-                  {routes.map((r, i) => (
-                    <motion.li
-                      key={r.to}
-                      initial={{ opacity: 0, x: 16 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.03 * i }}
+              <ul className="flex flex-col">
+                {routes.map((r, i) => (
+                  <motion.li
+                    key={r.to}
+                    initial={{ opacity: 0, x: 12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.03 * i }}
+                  >
+                    <NavLink
+                      to={r.to}
+                      className={({ isActive }) =>
+                        `block rounded-xl px-4 py-3 text-lg ${
+                          isActive ? "text-purple-400 bg-white/5" : "text-neutral-200 hover:bg-white/5"
+                        }`
+                      }
                     >
-                      <NavLink
-                        to={r.to}
-                        className={({ isActive }) =>
-                          `block rounded-xl px-3 py-3 text-base ${
-                            isActive
-                              ? "text-purple-400 bg-white/5"
-                              : "text-neutral-200 hover:bg-white/5"
-                          }`
-                        }
-                      >
-                        {r.label}
-                      </NavLink>
-                    </motion.li>
-                  ))}
-                </ul>
+                      {r.label}
+                    </NavLink>
+                  </motion.li>
+                ))}
+              </ul>
 
-                <div className="mt-3 px-1">
-                  <SocialLinks />
-                </div>
-              </nav>
-            </motion.aside>
-          </>
+              <div className="mt-4 px-1">
+                <SocialLinks />
+              </div>
+            </motion.nav>
+          </motion.div>
         )}
       </AnimatePresence>
     </header>
