@@ -22,10 +22,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
 
-  // Cierra al navegar (por si un link no tiene onClick)
   useEffect(() => { setOpen(false); }, [location.pathname]);
-
-  // Bloquea scroll del body cuando el menú está abierto
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -38,7 +35,6 @@ export default function Navbar() {
           <span className="text-purple-500">Diego</span> Trigo
         </Link>
 
-        {/* Desktop */}
         <ul className="hidden gap-4 sm:flex">
           {routes.map((r) => (
             <li key={r.to}>
@@ -48,7 +44,6 @@ export default function Navbar() {
         </ul>
         <div className="hidden sm:block"><SocialLinks /></div>
 
-        {/* Mobile trigger */}
         <button
           className="sm:hidden rounded-xl p-2 border border-neutral-800 hover:bg-white/5"
           aria-label="Open menu"
@@ -60,21 +55,20 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Overlay + Aside como hermanos, con z-index separados */}
       <AnimatePresence>
         {open && (
           <>
-            {/* Overlay */}
+            {/* Overlay: encima de todo */}
             <motion.div
               key="overlay"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 bg-black/70"
+              className="fixed inset-0 z-[60] bg-black/80"
               onClick={() => setOpen(false)}
             />
 
-            {/* Panel lateral */}
+            {/* Panel lateral: aún más arriba */}
             <motion.aside
               key="sheet"
               id="mobile-menu"
@@ -84,7 +78,7 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "tween", duration: 0.25 }}
-              className="fixed right-0 top-0 z-60 h-full w-[82%] max-w-[340px]
+              className="fixed inset-y-0 right-0 z-[70] w-[82%] max-w-[340px]
                          bg-neutral-950 border-l border-neutral-800 shadow-2xl
                          overflow-y-auto
                          pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]"
