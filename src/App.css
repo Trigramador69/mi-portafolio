@@ -51,4 +51,7 @@
   color: rgb(192 132 252); /* purple-400 */
   font-weight: bold;
 }
+.mobile-menu-bg {
+  background-color: #0a0a0a !important; 
+}
 }

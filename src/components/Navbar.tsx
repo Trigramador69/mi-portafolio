@@ -62,18 +62,16 @@ export default function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div
-            key="mobile-full"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            // Pantalla completa, SOLIDA, por encima de todo
-            className="fixed inset-0 z-[100] bg-neutral-950"
-            style={{
-              // safe areas iOS
-              paddingTop: "env(safe-area-inset-top)",
-              paddingBottom: "env(safe-area-inset-bottom)",
+             key="mobile-full"
+             initial={{ opacity: 0 }}
+             animate={{ opacity: 1 }}
+             exit={{ opacity: 0 }}
+             className="fixed inset-0 z-[100] mobile-menu-bg"
+             style={{
+                paddingTop: "env(safe-area-inset-top)",
+                paddingBottom: "env(safe-area-inset-bottom)",
             }}
-          >
+>
             {/* Header del menú */}
             <div className="flex items-center justify-between border-b border-neutral-800 px-4 py-3">
               <Link to="/" className="text-lg font-semibold">
