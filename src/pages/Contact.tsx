@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FaGithub, FaLinkedin, FaEnvelope, FaWhatsapp, FaTelegram } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaWhatsapp, FaTelegram } from "react-icons/fa";
 
 const container = {
   hidden: { opacity: 0, y: 8 },
