@@ -18,12 +18,6 @@ const item = {
 export default function Contact() {
   const contacts = [
     {
-      label: "Email",
-      href: "mailto:trigobol23@gmail.com",
-      icon: <FaEnvelope size={20} />,
-      color: "",
-    },
-    {
       label: "GitHub",
       href: "https://github.com/Trigramador69",
       icon: <FaGithub size={20} />,
