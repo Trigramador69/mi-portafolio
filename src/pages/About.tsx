@@ -3,7 +3,7 @@ export default function About() {
   return (
     <section className="container-clip grid gap-8 sm:grid-cols-[220px,1fr] items-start">
       <img
-        src="/images/me/DiegoTrigo.jpg"
+        src="/images/me/DiegoTrigo.jpeg"
         alt="Diego Trigo"
         className="h-[220px] w-[220px] object-cover rounded-2xl border border-neutral-800"
       />
